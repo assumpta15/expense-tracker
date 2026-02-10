@@ -1,0 +1,54 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import bcrypt from "bcryptjs";
+import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+import incomeRoutes from "./routes/incomeRoutes.js";
+import expenseRoutes from "./routes/expenseRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+
+dotenv.config();
+
+const app = express();
+
+// Fix __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Middleware
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+app.use(express.json());
+app.use(cookieParser());
+
+// Test Route
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
+// Database
+connectDB();
+
+// Routes
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/income", incomeRoutes);
+app.use("/api/v1/expense", expenseRoutes);
+app.use("/api/v1/dashboard", dashboardRoutes);
+
+// Serve uploaded images (CORRECT VERSION)
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
