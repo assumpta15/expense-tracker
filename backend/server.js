@@ -60,8 +60,10 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+const frontendPath = path.join(__dirname, "../frontend/dist");
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
+app.use(express.static(frontendPath));
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
