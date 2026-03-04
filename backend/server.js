@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import cookieParser from "cookie-parser";
-import path from "path";
+
 import { fileURLToPath } from "url";
 
 import connectDB from "./config/db.js";
