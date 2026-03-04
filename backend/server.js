@@ -34,9 +34,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Test Route
-app.get("/", (req, res) => {
-  res.send("Backend is running");
-});
+// app.get("/", (req, res) => {
+//   res.send("Backend is running");
+// });
 
 // Database
 connectDB();
@@ -52,11 +52,6 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-
-
 
 
 
@@ -64,8 +59,20 @@ const frontendPath = path.join(__dirname, "../frontend/dist");
 
 app.use(express.static(frontendPath));
 
-// React fallback route
 app.use((req, res, next) => {
   if (req.path.startsWith("/api")) return next();
   res.sendFile(path.join(frontendPath, "index.html"));
 });
+
+
+
+
+
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+
+
+
+
