@@ -55,9 +55,9 @@ const PORT = process.env.PORT || 8000;
 
 
 
-const frontendPath = path.join(__dirname, "../frontend/dist");
+// const frontendPath = path.join(__dirname, "../frontend/dist");
 
-app.use(express.static(frontendPath));
+// app.use(express.static(frontendPath));
 
 // app.use((req, res, next) => {
 //   if (req.path.startsWith("/api")) return next();
