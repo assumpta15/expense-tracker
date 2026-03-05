@@ -3,9 +3,10 @@ export const BASE_URL =
 
 export const API_PATHS = {
   AUTH: {
-    LOGIN: "/auth/login",
-    REGISTER: "/auth/register",
-    GET_USER_INFO: "/auth/getUser",
+  LOGIN: "/auth/login",
+  REGISTER: "/auth/register",
+  GET_USER_INFO: "/auth/get-user",
+
   },
 
   
