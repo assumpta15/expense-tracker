@@ -8,9 +8,11 @@ export const API_PATHS = {
     GET_USER_INFO: "/auth/getUser",
   },
 
-  DASHBOARD: {
-    DASHBOARD_DATA: "/dashboard/get-data",
-  },
+  
+    DASHBOARD: {
+  DASHBOARD_DATA: "/dashboard/get-data",
+},
+  
 
   INCOME: {
     ADD_INCOME: "/income/add",
