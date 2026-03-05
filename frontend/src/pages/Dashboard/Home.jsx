@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { useUserAuth } from "../../hooks/useUserAuth";
@@ -11,7 +9,6 @@ import { addThousandsSeparator } from "../../utils/helper";
 import RecentTransactions from "../../components/Dashboard/RecentTransactions";
 import FinanceOverview from "./FinanceOverview";
 import ExpenseTransactions from "./ExpenseTransactions";
-
 import Last30DaysExpenses from "./Last30DaysExpenses";
 import { LuHandCoins, LuWalletMinimal } from "react-icons/lu";
 import { IoMdCard } from "react-icons/io";
@@ -24,47 +21,27 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [dashboardData, setDashboardData] = useState(null);
-
   const [loading, setLoading] = useState(false);
 
   const fetchDashboardData = async () => {
-  if (loading) return;
+    if (loading) return;
 
-  setLoading(true);
+    setLoading(true);
 
- 
+    try {
+      const response = await axiosInstance.get(
+        API_PATHS.DASHBOARD.DASHBOARD_DATA
+      );
 
+      console.log("Dashboard API:", response.data);
 
-
-
-  const fetchDashboardData = async () => {
-  if (loading) return;
-
-  setLoading(true);
-
-  try {
-    const response = await axiosInstance.get(
-      API_PATHS.DASHBOARD.DASHBOARD_DATA
-    );
-
-    setDashboardData(response.data);
-
-  } catch (error) {
-    console.log("Dashboard error:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-useEffect(() => {
-  fetchDashboardData();
-}, []);
-
-
-
-
-
-console.log("Dashboard API:", response.data);
+      setDashboardData(response.data);
+    } catch (error) {
+      console.log("Dashboard error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchDashboardData();
@@ -73,51 +50,46 @@ console.log("Dashboard API:", response.data);
   return (
     <DashboardLayout activeMenu="Dashboard">
       <div className="my-5 mx-auto">
+
+        {/* Top Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
+
           <InfoCard
-          icon={<IoMdCard />}
-          label = "Total Balance"
-          value = {addThousandsSeparator(dashboardData?.totalBalance || 0)}
-          color = "bg-primary"
+            icon={<IoMdCard />}
+            label="Total Balance"
+            value={addThousandsSeparator(dashboardData?.totalBalance || 0)}
+            color="bg-primary"
           />
 
-           <InfoCard
-          icon={<LuWalletMinimal />}
-          label = "Total Income"
-          value = {addThousandsSeparator(dashboardData?.totalIncome || 0)}
-          color = "bg-orange-500"
+          <InfoCard
+            icon={<LuWalletMinimal />}
+            label="Total Income"
+            value={addThousandsSeparator(dashboardData?.totalIncome || 0)}
+            color="bg-orange-500"
           />
 
-           <InfoCard
-          icon={<LuHandCoins />}
-          label = "Total Expense"
-          value = {addThousandsSeparator(dashboardData?.totalExpenses || 0)}
-          color = "bg-red-500"
+          <InfoCard
+            icon={<LuHandCoins />}
+            label="Total Expense"
+            value={addThousandsSeparator(dashboardData?.totalExpenses || 0)}
+            color="bg-red-500"
           />
 
-        </div> 
+        </div>
 
+        {/* Dashboard Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-           <RecentTransactions
-          transactions = {dashboardData?.recentTransactions}
-          onSeeMore = {() => navigate("/expense")}
+
+          <RecentTransactions
+            transactions={dashboardData?.recentTransactions || []}
+            onSeeMore={() => navigate("/expense")}
           />
 
-          {/* <FinanceOverview
-          
-          totalBalance = {dashboardData?.totalBalance || 0}
-          totalIncome = {dashboardData?.totalIncome || 0}
-          totalExpense = {dashboardData?.totalExpense || 0}
-          
-          /> */}
-
-<FinanceOverview
-  totalBalance={dashboardData?.totalBalance || 0}
-  totalIncome={dashboardData?.totalIncome || 0}
-  totalExpense={dashboardData?.totalExpenses || 0}
-/>
-
+          <FinanceOverview
+            totalBalance={dashboardData?.totalBalance || 0}
+            totalIncome={dashboardData?.totalIncome || 0}
+            totalExpense={dashboardData?.totalExpenses || 0}
+          />
 
           <ExpenseTransactions
             transactions={
@@ -126,30 +98,24 @@ console.log("Dashboard API:", response.data);
             onSeeMore={() => navigate("/expense")}
           />
 
-
-
-          <Last30DaysExpenses 
-          data = {dashboardData?.last30DaysExpenses?.transactions || []
-
-          }
-
+          <Last30DaysExpenses
+            data={dashboardData?.last30DaysExpenses?.transactions || []}
           />
 
-
-        
           <RecentIncomeWithChart
-  data={dashboardData?.last60DaysIncome?.transactions?.slice(0, 4) || []}
-  totalIncome={dashboardData?.last60DaysIncome?.total || 0}
-/>
+            data={
+              dashboardData?.last60DaysIncome?.transactions?.slice(0, 4) || []
+            }
+            totalIncome={dashboardData?.last60DaysIncome?.total || 0}
+          />
 
-
-
-<RecentIncome
-transactions = {dashboardData?.last60DaysIncome?.transactions || []}
-onSeeMore = {() => navigate("/income")}
-/>
+          <RecentIncome
+            transactions={dashboardData?.last60DaysIncome?.transactions || []}
+            onSeeMore={() => navigate("/income")}
+          />
 
         </div>
+
       </div>
     </DashboardLayout>
   );
