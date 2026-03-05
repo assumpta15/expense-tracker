@@ -54,7 +54,7 @@ const Login = () => {
         updateUser(user);
         localStorage.setItem("user", JSON.stringify(user));
 
-        navigate("/dashboard"); // ✅ FIXED TYPO
+        navigate("/dashboard"); 
       }
     } catch (error) {
       if (error.response && error.response.data.message) {
