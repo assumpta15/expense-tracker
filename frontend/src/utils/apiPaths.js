@@ -1,4 +1,6 @@
-export const BASE_URL = "http://localhost:8000";
+// export const BASE_URL = "http://localhost:8000";
+
+const BASE_URL = "https://expense-tracker-2-tx8p.onrender.com/api/v1";
 
 //utils/apiPaths.js
 
