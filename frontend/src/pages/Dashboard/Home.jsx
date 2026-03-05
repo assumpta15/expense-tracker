@@ -28,19 +28,41 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchDashboardData = async () => {
+  if (loading) return;
+
+  setLoading(true);
+
+ 
+
+
+
+
+  const fetchDashboardData = async () => {
+  if (loading) return;
+
+  setLoading(true);
+
   try {
     const response = await axiosInstance.get(
-  API_PATHS.DASHBOARD.DASHBOARD_DATA
-);
-    
-
-    console.log("Dashboard API:", response.data);
+      API_PATHS.DASHBOARD.DASHBOARD_DATA
+    );
 
     setDashboardData(response.data);
+
   } catch (error) {
-    console.log("Dashboard fetch failed:", error);
+    console.log("Dashboard error:", error);
+  } finally {
+    setLoading(false);
   }
 };
+
+useEffect(() => {
+  fetchDashboardData();
+}, []);
+
+
+
+
 
 console.log("Dashboard API:", response.data);
 
