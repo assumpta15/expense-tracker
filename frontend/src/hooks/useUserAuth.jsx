@@ -7,15 +7,16 @@ export const useUserAuth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) return;
-
     const storedUser = localStorage.getItem("user");
 
-    if (storedUser) {
-      updateUser(JSON.parse(storedUser));
-    } else {
+    if (!storedUser) {
       clearUser();
       navigate("/login");
+      return;
+    }
+
+    if (!user) {
+      updateUser(JSON.parse(storedUser));
     }
   }, [user, updateUser, clearUser, navigate]);
 };

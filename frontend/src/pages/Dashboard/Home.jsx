@@ -28,30 +28,21 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   const fetchDashboardData = async () => {
-    if (loading) return;
-
-    setLoading(true);
-
-    const fetchDashboardData = async () => {
-  if (loading) return;
-
-  setLoading(true);
-
   try {
     const response = await axiosInstance.get(
-      API_PATHS.DASHBOARD.DASHBOARD_DATA
-    );
+  API_PATHS.DASHBOARD.DASHBOARD_DATA
+);
+    
 
-    if (response.data) {
-      setDashboardData(response.data);
-    }
+    console.log("Dashboard API:", response.data);
+
+    setDashboardData(response.data);
   } catch (error) {
-    console.log("Something went wrong. Please try again", error);
-  } finally {
-    setLoading(false);
+    console.log("Dashboard fetch failed:", error);
   }
 };
-  };
+
+console.log("Dashboard API:", response.data);
 
   useEffect(() => {
     fetchDashboardData();
