@@ -3,32 +3,25 @@ export const BASE_URL =
 
 export const API_PATHS = {
   AUTH: {
-  LOGIN: "/auth/login",
-  REGISTER: "/auth/register",
-  
+    LOGIN: "/auth/login",
+    REGISTER: "/auth/register",
   },
 
-  
-    DASHBOARD: {
-  DASHBOARD_DATA: "/dashboard/get-data",
-},
-  
+  DASHBOARD: {
+    DASHBOARD_DATA: "/dashboard",
+  },
 
   INCOME: {
     ADD_INCOME: "/income/add",
     GET_ALL_INCOME: "/income/get",
-    DELETE_INCOME: (incomeId) => `/income/${incomeId}`,
+    DELETE_INCOME: (id) => `/income/${id}`,
     DOWNLOAD_INCOME: "/income/downloadexcel",
   },
 
   EXPENSE: {
     ADD_EXPENSE: "/expense/add",
     GET_ALL_EXPENSE: "/expense/get",
-    DELETE_EXPENSE: (expenseId) => `/expense/${expenseId}`,
+    DELETE_EXPENSE: (id) => `/expense/${id}`,
     DOWNLOAD_EXPENSE: "/expense/downloadexcel",
-  },
-
-  IMAGE: {
-    UPLOAD_IMAGE: "/auth/upload-image",
   },
 };
